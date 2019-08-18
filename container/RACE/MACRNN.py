@@ -60,7 +60,7 @@ class Reader(tf.keras.layers.Layer):
 
 class Writer(tf.keras.layers.Layer):
     def __init__(self, d_model):
-        super(Reader, self).__init__()
+        super(Writer, self).__init__()
 
         self.m1 = tf.keras.layers.Dense(d_model)
         self.control_attention = tf.keras.layers.Dense(1)
@@ -112,7 +112,7 @@ class MAC_Cell(tf.nn.rnn_cell.RNNCell):
         self.controller = Controller(d_model) #, num_layers, num_heads, dff, rate)
         self.reader = Reader(d_model) #, num_layers, num_heads, dff, rate)
         self.write = Writer(d_model)
-        self.all_results = tf.constant(tf.ones(2 * d_model))
+        self.all_results = tf.ones([tf.shape(knowledge)[0], 1, 2 * d_model])
         self.knowledge = knowledge
         self.question = question
         self.question_state = tf.keras.layers.Dense(d_model)
@@ -122,6 +122,8 @@ class MAC_Cell(tf.nn.rnn_cell.RNNCell):
     def call(self, x, h, training):
         # h (the control and memory of the previous step, respectively): [2d]
         # x (the temporal encoding of the reasoning step): [d]
+        
+        print("MAC_CELL X: " + str(tf.shape(x)))
 
         quest_state = self.question_state(x * self.question_rep)
         prev_control, prev_memory = tf.split(h, 2)
@@ -132,6 +134,6 @@ class MAC_Cell(tf.nn.rnn_cell.RNNCell):
         # output = self.output(new_memory, self.question, training)
 
         result = tf.concat([new_control, new_memory])
-        self.all_results = tf.concat([self.allresults, result], 1)
+        self.all_results = tf.concat([self.allresults, tf.expand_dims(result, 1)], 1)
 
         return result, result

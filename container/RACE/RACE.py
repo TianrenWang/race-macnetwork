@@ -55,8 +55,8 @@ def model_fn(features, labels, mode):
     Model function for CIFAR-10.
     For more information: https://www.tensorflow.org/guide/custom_estimators#write_a_model_function
     """
-    questions = features['question']
-    articles = features['articles']
+    questions = features[QUEST_TENSOR_NAME]
+    articles = features[ART_TENSOR_NAME]
 
     network = MAC_network.MAC_network_generator(d_model, num_classes, max_steps)
 
@@ -160,8 +160,8 @@ def parser(serialized_example):
             'article_name': tf.FixedLenFeature([], tf.string)
         })
 
-    question = tf.decode_raw(features['question_value'], tf.uint8)
-    article = tf.decode_raw(features['article_value'], tf.uint8)
+    question = tf.decode_raw(features['question_value'], tf.float32)
+    article = tf.decode_raw(features['article_value'], tf.float32)
 
     label = tf.cast(features['answer'], tf.int32)
 
@@ -199,6 +199,7 @@ def train(model_dir, data_dir, train_steps):
 
 def main(model_dir, data_dir, train_steps):
     tf.logging.set_verbosity(tf.logging.INFO)
+    print("dog")
     train(model_dir, data_dir, train_steps)
 
 

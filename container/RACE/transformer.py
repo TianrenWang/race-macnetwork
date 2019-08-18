@@ -29,12 +29,12 @@ def scaled_dot_product_attention(q, k, v, mask):
       output, attention_weights
     """
 
-    print("----------")
-    print("q: " + str(q.shape))
-    print("k: " + str(k.shape))
+#     print("----------")
+#     print("q: " + str(q.shape))
+#     print("k: " + str(k.shape))
 
     matmul_qk = tf.matmul(q, k, transpose_b=True)  # (..., seq_len_q, seq_len_k)
-    print("matmul_qk: " + str(matmul_qk.shape))
+#     print("matmul_qk: " + str(matmul_qk.shape))
 
     # scale matmul_qk
     dk = tf.cast(tf.shape(k)[-1], tf.float32)
@@ -47,11 +47,11 @@ def scaled_dot_product_attention(q, k, v, mask):
     # softmax is normalized on the last axis (seq_len_k) so that the scores
     # add up to 1.
     attention_weights = tf.nn.softmax(scaled_attention_logits, axis=-1)  # (..., seq_len_q, seq_len_k)
-    print("softmax: " + str(attention_weights.shape))
+#     print("softmax: " + str(attention_weights.shape))
 
     output = tf.matmul(attention_weights, v)  # (..., seq_len_v, depth_v)
-    print("v: " + str(v.shape))
-    print("output: " + str(output.shape))
+#     print("v: " + str(v.shape))
+#     print("output: " + str(output.shape))
 
     return output, attention_weights
 
@@ -100,12 +100,12 @@ class MultiHeadAttention(tf.keras.layers.Layer):
 
         concat_attention = tf.reshape(scaled_attention,
                                       (batch_size, -1, self.d_model))  # (batch_size, seq_len_v, d_model)
-        print("concat: " + str(concat_attention.shape))
+        # print("concat: " + str(concat_attention.shape))
 
         output = self.dense(concat_attention)  # (batch_size, seq_len_v, d_model)
-        print("after dense: " + str(output.shape))
+        # print("after dense: " + str(output.shape))
 
-        print("----------")
+        # print("----------")
 
         return output, attention_weights
 
@@ -168,7 +168,6 @@ class Encoder(tf.keras.layers.Layer):
         attention_weights = {}
 
         knowledge *= tf.math.sqrt(tf.cast(self.d_model, tf.float32))
-        knowledge += self.pos_encoding[:, :seq_len, :]
 
         knowledge = self.dropout(knowledge, training=training)
 

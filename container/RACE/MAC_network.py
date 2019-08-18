@@ -82,8 +82,8 @@ def MAC_network_generator(d_model, num_classes, max_steps):
 
         step_encoder = positional_encoding(max_steps, d_model)
 
-        decoder1 = tf.keras.layers.dense(768)
-        decoder2 = tf.keras.layers.dense(512)
+        decoder1 = tf.keras.layers.Dense(768)
+        decoder2 = tf.keras.layers.Dense(512)
 
         decoded_knowledge = tf.nn.tanh(decoder1(knowledge))
         decoded_knowledge = tf.nn.tanh(decoder2(decoded_knowledge))
