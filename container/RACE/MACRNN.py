@@ -116,20 +116,28 @@ class Output(tf.keras.layers.Layer):
 
 class MAC_Cell(tf.keras.layers.Layer):
 
-    def __init__(self, d_model, reuse=None): #, num_layers, num_heads, dff, rate):
+    def __init__(self, d_model, steps): #, num_layers, num_heads, dff, rate):
         super(MAC_Cell, self).__init__()
         self.d_model = d_model
         self.controller = Controller(self.d_model) #, num_layers, num_heads, dff, rate)
         self.reader = Reader(self.d_model) #, num_layers, num_heads, dff, rate)
         self.write = Writer(self.d_model)
         self.question_state = tf.keras.layers.Dense(self.d_model)
+        self.steps = steps
 
 
     def get_initial_state(self, inputs=None, batch_size=None, dtype=None):
-        steps = tf.shape(inputs)[1]
         ones = tf.ones([batch_size, 1, self.d_model * 2])
-        zeros = tf.zeros([batch_size, steps - 1, self.d_model * 2])
+        zeros = tf.zeros([batch_size, self.steps - 1, self.d_model * 2])
         return tf.concat([ones, zeros], 1) # [batch, steps, d_model * 2]
+
+    @property
+    def state_size(self):
+        return [self.steps, self.d_model * 2]
+
+    @property
+    def output_size(self):
+        return [self.steps, self.d_model * 2]
 
 
     def call(self, x, h, constants, training):

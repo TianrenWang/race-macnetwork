@@ -4,7 +4,6 @@
     <list default="true" id="97007e1a-e203-4cde-92db-850994484126" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/container/RACE/MACRNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/container/RACE/MACRNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/container/RACE/MAC_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/container/RACE/MAC_network.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,8 +40,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/container/RACE/MACRNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-190">
-              <caret line="110" column="50" lean-forward="true" selection-start-line="110" selection-start-column="50" selection-end-line="110" selection-end-column="50" />
+            <state relative-caret-position="335">
+              <caret line="135" column="15" selection-start-line="135" selection-start-column="15" selection-end-line="135" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -89,8 +88,8 @@
         <option value="$PROJECT_DIR$/container/build_and_push.sh" />
         <option value="$PROJECT_DIR$/container/RACE/train" />
         <option value="$PROJECT_DIR$/container/RACE/RACE.py" />
-        <option value="$PROJECT_DIR$/container/RACE/MACRNN.py" />
         <option value="$PROJECT_DIR$/container/RACE/MAC_network.py" />
+        <option value="$PROJECT_DIR$/container/RACE/MACRNN.py" />
       </list>
     </option>
   </component>
@@ -215,12 +214,12 @@
       <workItem from="1565997637296" duration="1387000" />
       <workItem from="1566047165076" duration="2941000" />
       <workItem from="1566086805123" duration="4292000" />
-      <workItem from="1566158590758" duration="6355000" />
+      <workItem from="1566158590758" duration="6712000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55169000" />
+    <option name="totallyTimeSpent" value="55526000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="976" extended-state="6" />
@@ -324,8 +323,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/container/RACE/MACRNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-190">
-          <caret line="110" column="50" lean-forward="true" selection-start-line="110" selection-start-column="50" selection-end-line="110" selection-end-column="50" />
+        <state relative-caret-position="335">
+          <caret line="135" column="15" selection-start-line="135" selection-start-column="15" selection-end-line="135" selection-end-column="25" />
         </state>
       </provider>
     </entry>
