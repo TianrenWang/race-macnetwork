@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97007e1a-e203-4cde-92db-850994484126" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/container/RACE/MACRNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/container/RACE/MACRNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/container/RACE/MAC_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/container/RACE/MAC_network.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/container/RACE/MACRNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="87" column="31" lean-forward="true" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="31" />
+            <state relative-caret-position="-190">
+              <caret line="110" column="50" lean-forward="true" selection-start-line="110" selection-start-column="50" selection-end-line="110" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -48,8 +50,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/container/RACE/MAC_network.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="63" column="57" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="57" />
+            <state relative-caret-position="383">
+              <caret line="98" column="128" selection-start-line="98" selection-start-column="128" selection-end-line="98" selection-end-column="128" />
               <folding>
                 <element signature="e#1485#1523#0" expanded="true" />
               </folding>
@@ -88,6 +90,7 @@
         <option value="$PROJECT_DIR$/container/RACE/train" />
         <option value="$PROJECT_DIR$/container/RACE/RACE.py" />
         <option value="$PROJECT_DIR$/container/RACE/MACRNN.py" />
+        <option value="$PROJECT_DIR$/container/RACE/MAC_network.py" />
       </list>
     </option>
   </component>
@@ -212,15 +215,16 @@
       <workItem from="1565997637296" duration="1387000" />
       <workItem from="1566047165076" duration="2941000" />
       <workItem from="1566086805123" duration="4292000" />
-      <workItem from="1566158590758" duration="5871000" />
+      <workItem from="1566158590758" duration="6355000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54685000" />
+    <option name="totallyTimeSpent" value="55169000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="976" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30402932" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -298,16 +302,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/container/RACE/MAC_network.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="63" column="57" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="57" />
-          <folding>
-            <element signature="e#1485#1523#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/container/RACE/RACE.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -318,10 +312,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/container/RACE/MAC_network.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="98" column="128" selection-start-line="98" selection-start-column="128" selection-end-line="98" selection-end-column="128" />
+          <folding>
+            <element signature="e#1485#1523#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/container/RACE/MACRNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="87" column="31" lean-forward="true" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="31" />
+        <state relative-caret-position="-190">
+          <caret line="110" column="50" lean-forward="true" selection-start-line="110" selection-start-column="50" selection-end-line="110" selection-end-column="50" />
         </state>
       </provider>
     </entry>

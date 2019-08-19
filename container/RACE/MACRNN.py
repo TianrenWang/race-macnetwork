@@ -117,7 +117,7 @@ class Output(tf.keras.layers.Layer):
 class MAC_Cell(tf.keras.layers.Layer):
 
     def __init__(self, d_model, reuse=None): #, num_layers, num_heads, dff, rate):
-        super(MAC_Cell, self).__init__(_reuse=reuse)
+        super(MAC_Cell, self).__init__()
         self.d_model = d_model
         self.controller = Controller(self.d_model) #, num_layers, num_heads, dff, rate)
         self.reader = Reader(self.d_model) #, num_layers, num_heads, dff, rate)
