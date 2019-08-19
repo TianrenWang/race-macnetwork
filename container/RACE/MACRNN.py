@@ -149,9 +149,9 @@ class MAC_Cell(tf.keras.layers.Layer):
         prev_control = tf.squeeze(prev_control) # [batch, d]
         prev_memory = tf.squeeze(prev_memory) # [batch, d]
 
-        knowledge = constants[0]
-        question = constants[1]
-        question_rep = constants[2]
+        knowledge = constants['knowledge']
+        question = constants['context_words']
+        question_rep = constants['question_representation']
 
         print("MAC_CELL X: " + str(tf.shape(x)))
 

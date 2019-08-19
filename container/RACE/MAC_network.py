@@ -93,10 +93,14 @@ def MAC_network_generator(d_model, num_classes, max_steps):
         context_words = Transformer(2, d_model, 8, d_model)(decoded_quest, decoded_quest, is_training)
         question_repre = tf.reduce_mean(context_words, 1)
 
+        constants = {'knowledge': decoded_knowledge,
+                     'context_words': context_words,
+                     'question_representation': question_repre}
+
         mac_cell = MAC_Cell(d_model, max_steps) #,
 
         mac_rnn = tf.keras.layers.RNN(mac_cell)
-        final_output = mac_rnn(step_encoder, constants=[decoded_knowledge, context_words, question_repre], training=is_training)
+        final_output = mac_rnn(step_encoder, constants=constants, training=is_training)
 
         __, memory = tf.split(final_output, 2)
 
