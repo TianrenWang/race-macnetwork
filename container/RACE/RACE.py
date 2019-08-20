@@ -172,6 +172,11 @@ def train_input_fn(data_dir):
     with tf.device('/cpu:0'):
         train_data = os.path.join(data_dir, 'dev.tfrecords')
         article, question, label_batch = make_batch(train_data, BATCH_SIZE)
+
+        # article = tf.cast(np.random.randn(1, 512, 1024), tf.float32)
+        # question = tf.cast(np.random.randn(1, 128, 1024), tf.float32)
+        # label_batch = np.random.randint(0, 3, 1, np.int32)
+
         return {ART_TENSOR_NAME: article, QUEST_TENSOR_NAME: question}, label_batch
 
 
@@ -179,6 +184,10 @@ def eval_input_fn(data_dir):
     with tf.device('/cpu:0'):
         eval_data = os.path.join(data_dir, 'dev.tfrecords')
         article, question, label_batch = make_batch(eval_data, BATCH_SIZE)
+
+        # article = tf.cast(np.random.randn(1, 512, 1024), tf.float32)
+        # question = tf.cast(np.random.randn(1, 128, 1024), tf.float32)
+        # label_batch = np.random.randint(0, 3, 1, np.int32)
 
         return {ART_TENSOR_NAME: article, QUEST_TENSOR_NAME: question}, label_batch
 
