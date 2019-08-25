@@ -105,8 +105,14 @@ def MAC_network_generator(d_model, num_classes, max_steps):
         memory = tf.slice(final_output[1], [0, 0, 0], [-1, 1, -1])
         memory = tf.squeeze(memory, axis=1) # getting rid of the iteration axis
 
-        output_cell = Output(d_model, num_classes)
-        output = output_cell(memory, question_repre, is_training)
+        #output_cell = Output(d_model, num_classes)
+        #output = output_cell(memory, question_repre, is_training)
+
+        dense1 = tf.keras.layers.Dense(d_model)
+        dense2 = tf.keras.layers.Dense(num_classes)
+        hidden1 = dense1(tf.concat([memory, question_repre], 1))
+        hidden1 = tf.nn.relu(hidden1)
+        output = dense2(hidden1)
 
         return output # Softmax classified [batch, classes]
 
