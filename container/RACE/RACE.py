@@ -134,7 +134,7 @@ def make_batch(data_dir, batch_size=2):
 
     dataset = dataset.map(parser, num_parallel_calls=batch_size)
 
-    min_queue_examples = int(45000 * 0.4)
+    min_queue_examples = 1000# int(45000 * 0.4)
     # Ensure that the capacity is sufficiently large to provide good random
     # shuffling.
     dataset = dataset.shuffle(buffer_size=min_queue_examples + 3 * batch_size)
