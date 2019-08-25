@@ -27,7 +27,7 @@ class Controller(tf.keras.layers.Layer):
         # control (the operation to be done this step): [batch, d]
         # context (BERT-encoded question): [batch, seq_len, d]
 
-        cq = self.cq(tf.concat([quest_state, control])) #[batch, d]
+        cq = self.cq(tf.concat([quest_state, control], axis=-1)) #[batch, d]
         focus = self.focus(cq * context) # [batch, seq_len, d]
         focus = tf.keras.backend.squeeze(focus, 2)
 
@@ -35,7 +35,7 @@ class Controller(tf.keras.layers.Layer):
 
         attention = tf.nn.softmax(focus) #[batch, seq_len]
 
-        return tf.reduce_mean(attention * context, 1), attention # [batch, d]
+        return tf.reduce_mean(tf.expand_dims(attention, 2) * context, 1), attention # [batch, d]
 
 
 class Reader(tf.keras.layers.Layer):
@@ -78,16 +78,18 @@ class Writer(tf.keras.layers.Layer):
     def call(self, memory, read, control, past_results, training):
         # past_results (concatenation of all previous controls and memories): [batch, iterations, 2d]
 
-        past_controls, past_memories = tf.split(past_results, 2, axis=2)
 
-        m1 = self.m1(tf.concat([memory, read], 2))
+        past_controls = past_results[0]
+        past_memories = past_results[1]
+
+        m1 = self.m1(tf.concat([memory, read], 1))
 
         control_attention = self.control_attention(past_controls * control)
-        control_attention = tf.squeeze(control_attention) # [batch, iterations]
+        control_attention = tf.squeeze(control_attention, 2) # [batch, iterations]
         iteration_mask = create_padding_mask(control_attention)
         control_attention += iteration_mask * -1e9
         control_softmax = tf.keras.activations.softmax(control_attention)
-        msa = tf.reduce_sum(control_softmax * past_memories, 1)
+        msa = tf.reduce_sum(tf.expand_dims(control_softmax, 2) * past_memories, 1)
 
         mp = self.m2(m1) + self.s(msa)
 
@@ -121,48 +123,49 @@ class MAC_Cell(tf.keras.layers.Layer):
         self.d_model = d_model
         self.controller = Controller(self.d_model) #, num_layers, num_heads, dff, rate)
         self.reader = Reader(self.d_model) #, num_layers, num_heads, dff, rate)
-        self.write = Writer(self.d_model)
+        self.writer = Writer(self.d_model)
         self.question_state = tf.keras.layers.Dense(self.d_model)
         self.steps = steps
 
 
     def get_initial_state(self, inputs=None, batch_size=None, dtype=None):
-        ones = tf.ones([batch_size, 1, self.d_model * 2])
-        zeros = tf.zeros([batch_size, self.steps - 1, self.d_model * 2])
-        return tf.concat([ones, zeros], 1) # [batch, steps, d_model * 2]
+        ones = tf.ones([batch_size, 1, self.d_model])
+        zeros = tf.zeros([batch_size, self.steps - 1, self.d_model])
+        initial_state = tf.concat([ones, zeros], 1)
+        return initial_state, initial_state # [batch, steps, d_model]
 
     @property
     def state_size(self):
         return [self.steps, self.d_model * 2]
-
-    @property
-    def output_size(self):
-        return [self.steps, self.d_model * 2]
+    #
+    # @property
+    # def output_size(self):
+    #     return [self.steps, self.d_model * 2]
 
 
     def call(self, x, h, constants, training):
         # h (the control and memory of all the previous steps, respectively): [batch, steps, 2d]
         # x (the temporal encoding of the reasoning step): [batch, d]
 
-        previous_state = tf.slice(h, [0, 0 , 0], [-1, 1, -1])
-        prev_control, prev_memory = tf.split(previous_state, 2) # [batch, 1, d]
-        prev_control = tf.squeeze(prev_control) # [batch, d]
-        prev_memory = tf.squeeze(prev_memory) # [batch, d]
+        prev_control = tf.slice(h[0], [0, 0 , 0], [-1, 1, -1]) # [batch, 1, d]
+        prev_memory = tf.slice(h[1], [0, 0, 0], [-1, 1, -1]) # [batch, 1, d]
+        prev_control = tf.squeeze(prev_control, axis=1) # [batch, d]
+        prev_memory = tf.squeeze(prev_memory, axis=1) # [batch, d]
 
-        knowledge = constants['knowledge']
-        question = constants['context_words']
-        question_rep = constants['question_representation']
-
-        print("MAC_CELL X: " + str(tf.shape(x)))
+        knowledge = constants[0]
+        question = constants[1]
+        question_rep = constants[2]
 
         quest_state = self.question_state(x * question_rep)
 
         new_control, control_attention = self.controller(quest_state, prev_control, question, training)
         read, read_attention = self.reader(prev_memory, knowledge, new_control, training)
         new_memory = self.writer(prev_memory, read, new_control, h, training)
-
-        new_state = tf.concat([new_control, new_memory])
-        h = tf.slice(h, [0, 0, 0], [-1, h.shape[1] - 1, -1])
-        h = tf.concat([tf.expand_dims(new_state, 1), h], 1)
+        print(h[0])
+        all_controls = tf.slice(h[0], [0, 0, 0], [-1, self.steps - 1, -1])
+        all_memories = tf.slice(h[1], [0, 0, 0], [-1, self.steps - 1, -1])
+        all_controls = tf.concat([tf.expand_dims(new_control, 1), all_controls], 1)
+        all_memories = tf.concat([tf.expand_dims(new_memory, 1), all_memories], 1)
+        h = (all_controls, all_memories)
 
         return h, h
